@@ -4,9 +4,12 @@ var Spotify = require('spotify');
 var omdb = require('omdb');
 var request = require('request');
 var keys = require('./keys.js');
-
 var argument2 = process.argv[2];
-var argument3 = process.argv[3];
+console.log(argument2)
+// var argument2 = process.argv[2];
+// var argument3 = process.argv[3];
+var argument3 = process.argv;
+console.log(argument3)
 
 function switchFunction() {
     switch (argument2) {
@@ -35,30 +38,29 @@ function switchFunction() {
     }
 }
 
-// //https://dev.twitter.com/overview/api/tweets
+// https://www.npmjs.com/package/twitter
 function twitter() {
-    var client = new twitter({
-        consumer_key: keys.twitterKeys.consumer_key,
-        consumer_secret: keys.twitterKeys.consumer_secret,
-        access_token_key: keys.twitterKeys.access_token_key,
-        access_token_secret: keys.twitterKeys.access_token_secret
+    var client = new Twitter({
+        consumer_key: process.env.keys.twitterKeys.consumer_key,
+        consumer_secret: process.env.keys.twitterKeys.consumer_secret,
+        access_token_key: process.env.keys.twitterKeys.access_token_key,
+        access_token_secret: process.env.keys.twitterKeys.access_token_secret
     });
 
-    //twitter function parameters:
-    var parameters = {
-        twitterHandle: 'bentleybrent',
-        count: 20
-    };
+
     //get statuses from twitter
-    client.get("statuses/user_timeline", parameters, function(error, tweets, response) {
-        if (!error && response.statusCode == 200) {
-            for (var i = 0; i < tweets.length; i++) {
-                console.log(tweets[i].text + "Created on:" + tweets[i].created_at + "\n");
-            }
-            console.log("--end result--" + "\n");
-        } else {
-            console.log(error);
-        }
+    client.get("favorites/list", function(error, tweets, response) {
+        if (error) throw error;
+        console.log(tweets); // The favorites. 
+        console.log(response); // Raw response object. 
+        // if (!error && response.statusCode == 200) {
+        //     for (var i = 0; i < tweets.length; i++) {
+        //         console.log(tweets[i].text + "Created on:" + tweets[i].created_at + "\n");
+        //     }
+        //     console.log("--end result--" + "\n");
+        // } else {
+        //     console.log(error);
+        // }
 
     });
 }
