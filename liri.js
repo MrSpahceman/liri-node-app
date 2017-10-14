@@ -1,6 +1,7 @@
 var fs = require('fs');
-var Twitter = require('node-twitter-api');
-var Spotify = require('spotify-web-api-node');
+var Twitter = require('twitter');
+var Spotify = require('spotify');
+var omdb = require('omdb');
 var request = require('request');
 var keys = require('./keys.js');
 
@@ -10,7 +11,7 @@ var argument3 = process.argv[3];
 function switchFunction() {
     switch (argument2) {
         case "my-tweets":
-            // twitter();
+            twitter();
             break;
         case "spotify-this-song":
 
@@ -34,9 +35,9 @@ function switchFunction() {
     }
 }
 
-//https://dev.twitter.com/overview/api/tweets
+// //https://dev.twitter.com/overview/api/tweets
 function twitter() {
-    var client = new Twitter({
+    var client = new twitter({
         consumer_key: keys.twitterKeys.consumer_key,
         consumer_secret: keys.twitterKeys.consumer_secret,
         access_token_key: keys.twitterKeys.access_token_key,
